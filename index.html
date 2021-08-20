@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <title>Homework JS</title>
+    <style>
+        body{
+            background-color: rgb(219, 219, 219);
+        }
+      .container{
+            background-color: white;
+            margin-top: 10px;
+           
+        }
+        .input-color{
+            margin-top: 10px;
+            margin-bottom :10px;
+        }
+        .button-color{
+            margin-bottom : 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="" class="text-center border border-light p-5">
+            <div id="date" class="h4 mb-4">Tanggal</div>
+            <div id="time" class="h4 mb-4">Waktu</div>
+            <p class="h4 mb-4">Temperature Convertion</p>
+            <div class="h4 mb-12">
+                <select name="from" id="from" onchange="select()">
+                    <option value="cel">Celcius</option>
+                    <option value="far">Farenheit</option>
+                    <option value="rea">Reamur</option>
+                </select> To
+                <select name="to" id="to" onchange="select()">
+                    <option value="cel">Celcius</option>
+                    <option value="far">Farenheit</option>
+                    <option value="rea">Reamur</option>
+                </select>
+            </div>
+            <input type="number" name="nmh" id="num" placeholder="Input Number" class="form-control mb-4" onkeyup="conv()" onkeypress="validate(event)">
+            <p>=</p>
+            <input type="number" name="result" id="result" placeholder="result" class="form-control mb-4" disabled>
+        </form>
+        <br>
+            Change Background Color : 
+            <input class="form-control input-color" id="color"/>
+            <button class="btn btn-primary button-color" type="button" onclick="change()">Change</button>
+
+        
+    </div>
+</body>
+<!-- koneksi ke file js conversuhu -->
+<script src="./convertsuhu.js"></script>
+<script>
+
+    // script datetime
+    $(document).ready(function () {
+      var interval = setInterval(function () {
+        var Datetimes = moment();
+        $("#date").html(
+            Datetimes.format("dddd").substring(0, 10).toUpperCase() + " " +Datetimes.format("DD MMMM YYYY")
+        );
+        $("#time").html(Datetimes.format("hh:mm:ss A"));
+      }, 100);
+    });
+
+    //function select data
+    function select(){
+        document.getElementById("num").value ="";
+        document.getElementById("result").value ="";
+    } 
+
+    //script data proses convert
+    const convertsuhu = new Convertsuhu();
+    function conv(){
+        if (document.getElementById("from").value == "cel") {
+            const res = convertsuhu.fromCelci(
+                document.getElementById("to").value, 
+                parseInt(document.getElementById("num").value)
+            );
+            document.getElementById("result").value = res;
+        }
+            
+        if (document.getElementById("from").value == "rea") {
+            const res = convertsuhu.fromReam(
+                document.getElementById("to").value,
+                parseInt(document.getElementById("num").value)
+            );
+            document.getElementById("result").value =res;
+            
+        }
+
+        if (document.getElementById("from").value == "far") {
+            const res = convertsuhu.fromFaren(
+                document.getElementById("to").value,
+                parseInt(document.getElementById("num").value)
+            );
+            document.getElementById("result").value=res; 
+        }
+    }
+    
+    // function valitasi angka 
+      function validate(evt) {
+      var theEvent = evt || window.event;
+
+      // Handle paste
+        if (theEvent.type === "paste") {
+            key = event.clipboardData.getData("text/plain");
+        } else {
+            // Handle key press
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+        }
+        var regex = /[0-9]|\./; //Regular Expression
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            alert("inputan yang ada masukkan bukan angka");
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
+    // function ganti warna background
+    function change(){
+        document.body.style.backgroundColor = document.getElementById("color").value;
+    }
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</html>

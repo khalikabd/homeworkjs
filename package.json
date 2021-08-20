@@ -1,0 +1,24 @@
+{
+  "name": "homeworkjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "convertsuhu.js",
+  "dependencies": {
+    "jest": "^27.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khalikabd/homeworkjs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khalikabd/homeworkjs/issues"
+  },
+  "homepage": "https://github.com/khalikabd/homeworkjs#readme"
+}
